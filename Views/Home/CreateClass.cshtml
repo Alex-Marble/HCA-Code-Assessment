@@ -1,0 +1,39 @@
+﻿@model Class
+
+@using (Html.BeginForm("CreateClass", "Home"))
+{
+    @Html.Label("Class Name")
+    @Html.TextBoxFor(m => m.ClassName)
+    <br />
+    @Html.Label("Teacher Id")
+    @Html.TextBoxFor(m => m.TeacherId)
+    <br />
+    <input id="submit" type="submit" value="Add Class" />
+}
+
+@section scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#submit').on('click', function (e) {
+                if ($('#ClassName').val() == '' || $('#TeacherId').val() == '') {
+                    e.preventDefault();
+                } else {
+
+                    var data = {
+                        FirstName: $('#ClassName').val(),
+                        LastName: $('#TeacherId').val()
+                    };
+
+                    let response = fetch('/home/AddClass', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8'
+                        },
+                        body: JSON.stringify(data)
+                    });
+                }
+            });
+        });
+    </script>
+}

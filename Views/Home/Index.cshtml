@@ -1,0 +1,64 @@
+﻿@model HCA_Code_Assessment.ViewModels.Home.IndexViewModel
+
+
+
+@{
+    ViewData["Title"] = "Home Page";
+    Student students = ViewBag.Student;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Hey @students.FirstName @students.LastName Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <h2>Classes</h2>
+    <table>
+        <tr>
+            <th>Class Id</th>
+            <th>Class Name</th>
+            <th>Teacher</th>
+        </tr>
+        @foreach (var c in Model.ClassList)
+        {
+            <tr>
+                <td>@c.ClassId</td>
+                <td>@c.ClassName</td>
+                <td>@c.TeacherId</td>
+            </tr>
+        }
+    </table>
+
+    <h2>Teachers</h2>
+    <table>
+        <tr>
+            <th>Teacher Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+        @foreach (var teacher in Model.TeacherList)
+        {
+            <tr>
+                <td>@teacher.TeacherId</td>
+                <td>@teacher.FirstName</td>
+                <td>@teacher.LastName</td>
+            </tr>
+        }
+    </table>
+
+    <h2>Students</h2>
+    <table>
+        <tr>
+            <th>Student Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+        @foreach (var student in Model.StudentList)
+        {
+            <tr>
+                <td>@student.StudentId</td>
+                <td>@student.FirstName</td>
+                <td>@student.LastName</td>
+            </tr>
+        }
+    </table>
+</div>
