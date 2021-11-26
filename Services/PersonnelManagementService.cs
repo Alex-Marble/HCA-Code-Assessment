@@ -27,6 +27,14 @@ namespace HCA_Code_Assessment.Services
             _context.SaveChanges();
         }
 
+        public void UpdateStudent(int studentId, string firstName, string lastName)
+        {
+            var student = GetStudentById(studentId);
+            student.FirstName = firstName;
+            student.LastName = lastName;
+            _context.SaveChanges();
+        }
+
         public void DeleteStudent(int studentId)
         {
             var student = _context.Students.Where(s => s.StudentId == studentId).FirstOrDefault();
@@ -42,6 +50,11 @@ namespace HCA_Code_Assessment.Services
         #endregion
 
         #region Teacher
+        public Teacher GetTeacherById(int id)
+        {
+            return _context.Teachers.Where(t => t.TeacherId == id).FirstOrDefault();
+        }
+
         public List<Teacher> GetListOfTeachers()
         {
             return _context.Teachers.ToList();
@@ -50,6 +63,14 @@ namespace HCA_Code_Assessment.Services
         public void AddTeacher(Teacher teacher)
         {
             _context.Teachers.Add(teacher);
+            _context.SaveChanges();
+        }
+
+        public void UpdateTeacher(int teacherId, string firstName, string lastName)
+        {
+            var teacher = GetTeacherById(teacherId);
+            teacher.FirstName = firstName;
+            teacher.LastName = lastName;
             _context.SaveChanges();
         }
 
@@ -62,6 +83,10 @@ namespace HCA_Code_Assessment.Services
         #endregion
 
         #region Class
+        public Class GetClassById(int id)
+        {
+            return _context.Classes.Where(c => c.ClassId == id).FirstOrDefault();
+        }
         public List<Class> GetListOfClasses()
         {
             return _context.Classes.ToList();
@@ -70,6 +95,14 @@ namespace HCA_Code_Assessment.Services
         public void AddClass(Class c)
         {
             _context.Classes.Add(c);
+            _context.SaveChanges();
+        }
+
+        public void UpdateClass(int classId, string className, int teacherId)
+        {
+            var schoolClass = GetClassById(teacherId);
+            schoolClass.ClassName = className;
+            schoolClass.TeacherId = teacherId;
             _context.SaveChanges();
         }
 

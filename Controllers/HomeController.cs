@@ -40,21 +40,9 @@ namespace HCA_Code_Assessment.Controllers
             return View(model);
         }
 
-        public IActionResult CreateStudent()
+        public IActionResult CreateClass()
         {
             return View();
-        }
-
-        [HttpPost]
-        public void AddStudent([FromBody]Student student)
-        {
-            _personnelService.AddStudent(student);
-        }
-        
-        [HttpDelete]
-        public void DeleteStudent(int studentId)
-        {
-            _personnelService.DeleteStudent(studentId);
         }
 
         public IActionResult CreateTeacher()
@@ -62,10 +50,45 @@ namespace HCA_Code_Assessment.Controllers
             return View();
         }
 
+        public IActionResult CreateStudent()
+        {
+            return View();
+        }
+
+        #region Class
+
         [HttpPost]
-        public void AddTeacher([FromBody]Teacher teacher)
+        public void AddClass([FromBody] Class c)
+        {
+            _personnelService.AddClass(c);
+        }
+
+        [HttpPut]
+        public void UpdateClass(int classId, string className, int teacherId)
+        {
+            _personnelService.UpdateClass(classId, className, teacherId);
+        }
+
+        [HttpDelete]
+        public void DeleteClass(int classId)
+        {
+            _personnelService.DeleteClass(classId);
+        }
+
+        #endregion
+
+        #region Teacher
+
+        [HttpPost]
+        public void AddTeacher([FromBody] Teacher teacher)
         {
             _personnelService.AddTeacher(teacher);
+        }
+
+        [HttpPut]
+        public void UpdateTeacher(int teacherId, string firstName, string lastName)
+        {
+            _personnelService.UpdateTeacher(teacherId, firstName, lastName);
         }
 
         [HttpDelete]
@@ -74,21 +97,29 @@ namespace HCA_Code_Assessment.Controllers
             _personnelService.DeleteTeacher(teacherId);
         }
 
-        public IActionResult CreateClass()
-        {
-            return View();
-        }
+        #endregion
+
+        #region Student
+
         [HttpPost]
-        public void AddClass([FromBody]Class c)
+        public void AddStudent([FromBody] Student student)
         {
-            _personnelService.AddClass(c);
+            _personnelService.AddStudent(student);
+        }
+
+        [HttpPut]
+        public void UpdateStudent(int studentId, string firstName, string lastName)
+        {
+            _personnelService.UpdateStudent(studentId, firstName, lastName);
         }
 
         [HttpDelete]
-        public void DeleteClass(int classId)
+        public void DeleteStudent(int studentId)
         {
-            _personnelService.DeleteClass(classId);
+            _personnelService.DeleteStudent(studentId);
         }
+
+        #endregion
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -85,7 +85,7 @@
 
             $("#DeleteTeacher").on("click", function () {
 
-                let response = fetch(`/home/DeleteTeacher?teahcerId=${selectedTeacherId}`, {
+                let response = fetch(`/home/DeleteTeacher?teacherId=${selectedTeacherId}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json;charset=utf-8'
