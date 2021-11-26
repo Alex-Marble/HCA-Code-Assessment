@@ -1,39 +1,37 @@
 ﻿@model Class
-
-@using (Html.BeginForm("CreateClass", "Home"))
-{
-    @Html.Label("Class Name")
-    @Html.TextBoxFor(m => m.ClassName)
+    <h2 class="display-4">Add New Class</h2>
     <br />
-    @Html.Label("Teacher Id")
-    @Html.TextBoxFor(m => m.TeacherId)
-    <br />
-    <input id="submit" type="submit" value="Add Class" />
-}
+    @using (Html.BeginForm("CreateClass", "Home"))
+    {
+        <ejs-textbox id="ClassName" placeholder="First Name"></ejs-textbox>
+        <ejs-textbox id="TeacherId" placeholder="Last Name"></ejs-textbox>
+        <br />
+        <ejs-button id="submit" content="Add Class"></ejs-button>
+    }
 
-@section scripts {
+    @section scripts {
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#submit').on('click', function (e) {
-                if ($('#ClassName').val() == '' || $('#TeacherId').val() == '') {
-                    e.preventDefault();
-                } else {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#submit').on('click', function (e) {
+                    if ($('#ClassName').val() == '' || $('#TeacherId').val() == '') {
+                        e.preventDefault();
+                    } else {
 
-                    var data = {
-                        FirstName: $('#ClassName').val(),
-                        LastName: $('#TeacherId').val()
-                    };
+                        var data = {
+                            FirstName: $('#ClassName').val(),
+                            LastName: $('#TeacherId').val()
+                        };
 
-                    let response = fetch('/home/AddClass', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json;charset=utf-8'
-                        },
-                        body: JSON.stringify(data)
-                    });
-                }
+                        let response = fetch('/home/AddClass', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json;charset=utf-8'
+                            },
+                            body: JSON.stringify(data)
+                        });
+                    }
+                });
             });
-        });
-    </script>
-}
+        </script>
+    }

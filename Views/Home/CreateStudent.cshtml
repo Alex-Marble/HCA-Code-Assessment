@@ -1,39 +1,38 @@
 ﻿@model Student
-
-@using (Html.BeginForm("CreateStudent", "Home"))
+    <h2 class="display-4">Add New Student</h2>
+    <br />
+    <div>
+        @using (Html.BeginForm("CreateStudent", "Home"))
 {
-    @Html.Label("First Name")
-    @Html.TextBoxFor(m => m.FirstName)
-    <br />
-    @Html.Label("Last Name")
-    @Html.TextBoxFor(m => m.LastName)
-    <br />
-    <input id="submit" type="submit" value="Add Student" />
+        <ejs-textbox id="FirstName" placeholder="First Name"></ejs-textbox>
+        <ejs-textbox id="LastName" placeholder="Last Name"></ejs-textbox>
+        <br />
+        <ejs-button id="submit" content="Add Student"></ejs-button>
 }
+    </div>
+    @section scripts {
 
-@section scripts {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#submit').on('click', function (e) {
+                    if ($('#FirstName').val() == '' || $('#LastName').val() == '') {
+                        e.preventDefault();
+                    } else {
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#submit').on('click', function (e) {
-                if ($('#FirstName').val() == '' || $('#LastName').val() == '') {
-                    e.preventDefault();
-                } else {
+                        var data = {
+                            FirstName: $('#FirstName').val(),
+                            LastName: $('#LastName').val()
+                        };
 
-                    var data = {
-                        FirstName: $('#FirstName').val(),
-                        LastName: $('#LastName').val()
-                    };
-
-                    let response = fetch('/home/AddStudent', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    });
-                }
+                        let response = fetch('/home/AddStudent', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        });
+                    }
+                });
             });
-        });
-    </script>
-}
+        </script>
+    }
