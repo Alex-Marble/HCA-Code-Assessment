@@ -24,12 +24,6 @@ namespace HCA_Code_Assessment.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Student = _personnelService.GetStudentById(1);
-
-            ViewBag.headerText0 = new TabHeader { Text = "Classes" };
-            ViewBag.headerText1 = new TabHeader { Text = "Teahcers" };
-            ViewBag.headerText2 = new TabHeader { Text = "Students" };
-
             var model = new IndexViewModel()
             {
                 StudentList = _personnelService.GetListOfStudents(),
