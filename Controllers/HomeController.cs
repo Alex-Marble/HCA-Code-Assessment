@@ -3,6 +3,7 @@ using HCA_Code_Assessment.Services;
 using HCA_Code_Assessment.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Syncfusion.EJ2.Navigations;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +26,10 @@ namespace HCA_Code_Assessment.Controllers
         {
             ViewBag.Student = _personnelService.GetStudentById(1);
 
+            ViewBag.headerText0 = new TabHeader { Text = "Classes" };
+            ViewBag.headerText1 = new TabHeader { Text = "Teahcers" };
+            ViewBag.headerText2 = new TabHeader { Text = "Students" };
+
             var model = new IndexViewModel()
             {
                 StudentList = _personnelService.GetListOfStudents(),
@@ -45,15 +50,28 @@ namespace HCA_Code_Assessment.Controllers
         {
             _personnelService.AddStudent(student);
         }
+        
+        [HttpDelete]
+        public void DeleteStudent(int studentId)
+        {
+            _personnelService.DeleteStudent(studentId);
+        }
 
         public IActionResult CreateTeacher()
         {
             return View();
         }
+
         [HttpPost]
         public void AddTeacher([FromBody]Teacher teacher)
         {
             _personnelService.AddTeacher(teacher);
+        }
+
+        [HttpDelete]
+        public void DeleteTeacher(int teacherId)
+        {
+            _personnelService.DeleteTeacher(teacherId);
         }
 
         public IActionResult CreateClass()
@@ -66,6 +84,11 @@ namespace HCA_Code_Assessment.Controllers
             _personnelService.AddClass(c);
         }
 
+        [HttpDelete]
+        public void DeleteClass(int classId)
+        {
+            _personnelService.DeleteClass(classId);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

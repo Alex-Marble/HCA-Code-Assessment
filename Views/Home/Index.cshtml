@@ -1,64 +1,126 @@
 ﻿@model HCA_Code_Assessment.ViewModels.Home.IndexViewModel
-
-
+@using Syncfusion.EJ2.Navigations;
 
 @{
     ViewData["Title"] = "Home Page";
-    Student students = ViewBag.Student;
+
+    List<object> commands = new List<object>();
+    commands.Add(new { type = "Delete", buttonOption = new { iconCss = "e-icons e-delete", cssClass = "e-flat" } });
+
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Hey @students.FirstName @students.LastName Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">School Data</h1>
+    <br />
+    <ejs-tab id="ej2Tab">
+        <e-tab-tabitems>
+            <e-tab-tabitem>
+                <e-content-template>
+                    <div>
+                        <div class="e-tab-header">
+                            <div>Classes</div>
+                            <div>Teachers</div>
+                            <div>Students</div>
+                        </div>
+                        <div class="e-content">
+                            <div>
+                                <ejs-grid id="Grid" dataSource=@Model.ClassList rowSelected="classSelected" allowPaging="true" allowSorting="true" allowFiltering="true">
+                                    <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+                                    <e-grid-columns>
+                                        <e-grid-column field="ClassId" headerText="Class ID" textAlign="Right" width="120"></e-grid-column>
+                                        <e-grid-column field="ClassName" headerText="Class Name" width="150"></e-grid-column>
+                                        <e-grid-column field="TeacherId" headerText="Teacher ID" width="130"></e-grid-column>
+                                    </e-grid-columns>
+                                </ejs-grid>
+                                <ejs-button id="DeleteClass" content="Delete Class"></ejs-button>
+                            </div>
+                            <div>
+                                <ejs-grid id="Grid1" dataSource=@Model.TeacherList rowSelected="teacherSelected" allowPaging="true" allowSorting="true" allowFiltering="true">
+                                    <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+                                    <e-grid-columns>
+                                        <e-grid-column field="TeacherId" headerText="Teacher ID" textAlign="Right" width="120"></e-grid-column>
+                                        <e-grid-column field="FirstName" headerText="First Name" width="150"></e-grid-column>
+                                        <e-grid-column field="LastName" headerText="Last Name" width="130"></e-grid-column>
+                                    </e-grid-columns>
+                                </ejs-grid>
+                                <ejs-button id="DeleteTeacher" content="Delete Teacher"></ejs-button>
+                            </div>
+                            <div>
+                                <ejs-grid id="Grid2" dataSource=@Model.StudentList rowSelected="studentSelected" allowPaging="true" allowSorting="true" allowFiltering="true">
+                                    <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+                                    <e-grid-editSettings allowAdding="true" mode="Normal"></e-grid-editSettings>
+                                    <e-grid-columns>
+                                        <e-grid-column field="StudentId" headerText="Student ID" textAlign="Right" width="120"></e-grid-column>
+                                        <e-grid-column field="FirstName" headerText="First Name" width="150"></e-grid-column>
+                                        <e-grid-column field="LastName" headerText="Last Name" width="130"></e-grid-column>
+                                    </e-grid-columns>
+                                </ejs-grid>
+                                <ejs-button id="DeleteStudent" content="Delete Student"></ejs-button>
+                            </div>
+                        </div>
+                    </div>
+                </e-content-template>
+            </e-tab-tabitem>
+        </e-tab-tabitems>
+    </ejs-tab>
 
-    <h2>Classes</h2>
-    <table>
-        <tr>
-            <th>Class Id</th>
-            <th>Class Name</th>
-            <th>Teacher</th>
-        </tr>
-        @foreach (var c in Model.ClassList)
-        {
-            <tr>
-                <td>@c.ClassId</td>
-                <td>@c.ClassName</td>
-                <td>@c.TeacherId</td>
-            </tr>
-        }
-    </table>
-
-    <h2>Teachers</h2>
-    <table>
-        <tr>
-            <th>Teacher Id</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-        </tr>
-        @foreach (var teacher in Model.TeacherList)
-        {
-            <tr>
-                <td>@teacher.TeacherId</td>
-                <td>@teacher.FirstName</td>
-                <td>@teacher.LastName</td>
-            </tr>
-        }
-    </table>
-
-    <h2>Students</h2>
-    <table>
-        <tr>
-            <th>Student Id</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-        </tr>
-        @foreach (var student in Model.StudentList)
-        {
-            <tr>
-                <td>@student.StudentId</td>
-                <td>@student.FirstName</td>
-                <td>@student.LastName</td>
-            </tr>
-        }
-    </table>
 </div>
+
+
+@section scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            $("#DeleteClass").on("click", function () {
+
+                let response = fetch(`/home/DeleteClass?classId=${selectedClassId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    }
+                });
+                var row = $("#Grid").ejGrid("getSelectedRows");
+            });
+
+            $("#DeleteTeacher").on("click", function () {
+
+                let response = fetch(`/home/DeleteTeacher?teahcerId=${selectedTeacherId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    }
+                });
+                var row = $("#Grid1").ejGrid("getSelectedRows");
+            });
+
+            $("#DeleteStudent").on("click", function () {
+
+                let response = fetch(`/home/DeleteStudent?studentId=${selectedStudentId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    }
+                });
+                var row = $("#Grid2").ejGrid("getSelectedRows");
+            });
+        });
+
+
+        var selectedClassId = 0;
+        var selectedTeacherId = 0;
+        var selectedStudentId = 0;
+
+        function classSelected(args) {
+            selectedClassId = args.data.ClassId;
+        }
+
+        function teacherSelected(args) {
+            selectedTeacherId = args.data.TeacherId;
+        }
+
+        function studentSelected(args) {
+            selectedStudentId = args.data.StudentId;
+        }
+    </script>
+}

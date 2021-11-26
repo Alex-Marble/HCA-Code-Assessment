@@ -15,6 +15,6 @@ namespace HCA_Code_Assessment.Models
         public int TeacherId { get; set; }
         public string ClassName { get; set; }
         [NotMapped]
-        public Teacher TeacherInfo { get; set; }
+        public virtual Teacher TeacherInfo { get; set; }
     }
 }
