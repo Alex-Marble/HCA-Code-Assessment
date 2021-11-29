@@ -1,0 +1,44 @@
+﻿@model Teacher
+<h2 class="display-4">Edit Teacher</h2>
+<br />
+<div>
+    @using (Html.BeginForm("Index", "Home"))
+    {
+        <ejs-textbox id="TeacherId" placeholder="Teacher Id" readonly="true"></ejs-textbox>
+        <ejs-textbox id="FirstName" placeholder="First Name"></ejs-textbox>
+        <ejs-textbox id="LastName" placeholder="Last Name"></ejs-textbox>
+        <br />
+        <ejs-button id="submit" content="Update Teacher"></ejs-button>
+    }
+</div>
+@section scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#TeacherId").val('@Model.TeacherId');
+            $('#FirstName').val('@Model.FirstName');
+            $('#LastName').val('@Model.LastName');
+
+                $('#submit').on('click', function (e) {
+                    if ($('#FirstName').val() == '' || $('#LastName').val() == '') {
+                        e.preventDefault();
+                    } else {
+
+                        var data = {
+                            TeacherId: $('#TeacherId').val(),
+                            FirstName: $('#FirstName').val(),
+                            LastName: $('#LastName').val()
+                        };
+
+                        let response = fetch('/home/UpdateTeacher', {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        });
+                    }
+                });
+            });
+    </script>
+}

@@ -11,7 +11,7 @@ namespace HCA_Code_Assessment.Models
     public class Student
     {
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int StudentId { get; }
+        public int StudentId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }

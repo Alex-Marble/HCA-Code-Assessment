@@ -39,14 +39,31 @@ namespace HCA_Code_Assessment.Controllers
             return View();
         }
 
+        public IActionResult EditClass(int classId)
+        {
+            var classroom = _personnelService.GetClassById(classId);
+            return View(classroom);
+        }
+
         public IActionResult CreateTeacher()
         {
             return View();
+        }
+        public IActionResult EditTeacher(int teacherId)
+        {
+            var teacher = _personnelService.GetTeacherById(teacherId);
+            return View(teacher);
         }
 
         public IActionResult CreateStudent()
         {
             return View();
+        }
+
+        public IActionResult EditStudent(int studentId)
+        {
+            var student = _personnelService.GetStudentById(studentId);
+            return View(student);
         }
 
         #region Class
@@ -58,9 +75,9 @@ namespace HCA_Code_Assessment.Controllers
         }
 
         [HttpPut]
-        public void UpdateClass(int classId, string className, int teacherId)
+        public void UpdateClass([FromBody] Class c)
         {
-            _personnelService.UpdateClass(classId, className, teacherId);
+            _personnelService.UpdateClass(c.ClassId, c.ClassName, c.TeacherId);
         }
 
         [HttpDelete]
@@ -80,9 +97,9 @@ namespace HCA_Code_Assessment.Controllers
         }
 
         [HttpPut]
-        public void UpdateTeacher(int teacherId, string firstName, string lastName)
+        public void UpdateTeacher([FromBody] Teacher teacher)
         {
-            _personnelService.UpdateTeacher(teacherId, firstName, lastName);
+            _personnelService.UpdateTeacher(teacher.TeacherId, teacher.FirstName, teacher.LastName);
         }
 
         [HttpDelete]
@@ -102,9 +119,9 @@ namespace HCA_Code_Assessment.Controllers
         }
 
         [HttpPut]
-        public void UpdateStudent(int studentId, string firstName, string lastName)
+        public void UpdateStudent([FromBody] Student student)
         {
-            _personnelService.UpdateStudent(studentId, firstName, lastName);
+            _personnelService.UpdateStudent(student.StudentId, student.FirstName, student.LastName);
         }
 
         [HttpDelete]

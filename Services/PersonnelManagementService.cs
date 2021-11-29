@@ -100,7 +100,7 @@ namespace HCA_Code_Assessment.Services
 
         public void UpdateClass(int classId, string className, int teacherId)
         {
-            var schoolClass = GetClassById(teacherId);
+            var schoolClass = GetClassById(classId);
             schoolClass.ClassName = className;
             schoolClass.TeacherId = teacherId;
             _context.SaveChanges();

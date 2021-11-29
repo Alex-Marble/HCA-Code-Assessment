@@ -28,6 +28,7 @@
                                         <e-grid-column field="TeacherId" headerText="Teacher ID" width="130"></e-grid-column>
                                     </e-grid-columns>
                                 </ejs-grid>
+                                <ejs-button id="EditClass" content="Edit Class"></ejs-button>
                                 <ejs-button id="DeleteClass" content="Delete Class"></ejs-button>
                             </div>
                             <div>
@@ -39,6 +40,7 @@
                                         <e-grid-column field="LastName" headerText="Last Name" width="130"></e-grid-column>
                                     </e-grid-columns>
                                 </ejs-grid>
+                                <ejs-button id="EditTeacher" content="Edit Teacher"></ejs-button>
                                 <ejs-button id="DeleteTeacher" content="Delete Teacher"></ejs-button>
                             </div>
                             <div>
@@ -51,6 +53,7 @@
                                         <e-grid-column field="LastName" headerText="Last Name" width="130"></e-grid-column>
                                     </e-grid-columns>
                                 </ejs-grid>
+                                <ejs-button id="EditStudent" content="Edit Student"></ejs-button>
                                 <ejs-button id="DeleteStudent" content="Delete Student"></ejs-button>
                             </div>
                         </div>
@@ -67,7 +70,12 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            
+            $("#EditClass").on("click", function () {
+                if (selectedClassId != 0) {
+                    window.location.href = `/home/EditClass?classId=${selectedClassId}`;
+                }
+            });
+
             $("#DeleteClass").on("click", function () {
 
                 let response = fetch(`/home/DeleteClass?classId=${selectedClassId}`, {
@@ -79,6 +87,12 @@
                 var row = $("#Grid").ejGrid("getSelectedRows");
             });
 
+            $("#EditTeacher").on("click", function () {
+                if (selectedTeacherId != 0) {
+                    window.location.href = `/home/EditTeacher?teacherId=${selectedTeacherId}`;
+                }
+            });
+
             $("#DeleteTeacher").on("click", function () {
 
                 let response = fetch(`/home/DeleteTeacher?teacherId=${selectedTeacherId}`, {
@@ -88,6 +102,12 @@
                     }
                 });
                 var row = $("#Grid1").ejGrid("getSelectedRows");
+            });
+
+            $("#EditStudent").on("click", function () {
+                if (selectedStudentId != 0) {
+                    window.location.href = `/home/EditStudent?studentId=${selectedStudentId}`;
+                }
             });
 
             $("#DeleteStudent").on("click", function () {
