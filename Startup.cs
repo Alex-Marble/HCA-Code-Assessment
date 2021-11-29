@@ -27,7 +27,13 @@ namespace HCA_Code_Assessment
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<AppDbContext>(item => item.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
+            services.AddDbContext<AppDbContext>(item => item.UseSqlServer(Configuration.GetConnectionString("MyConnection"), 
+                sqlServerOptionsAction: sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure();
+                }
+                ));
+            
             services.AddScoped<PersonnelManagementService>();
         }
 
