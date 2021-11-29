@@ -30,7 +30,7 @@
                             LastName: $('#LastName').val()
                         };
 
-                        let response = async fetch('/home/UpdateStudent', {
+                        let response = fetch('/home/UpdateStudent', {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json'
